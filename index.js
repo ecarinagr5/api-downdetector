@@ -17,17 +17,26 @@ app.listen(process.env.PORT, () => {
 console.log("Connect Leads is connected");
 app.get("/user/generateToken", (req, res) => {
   // Validate User Here
-  // Then generate JWT Token
-  console.log("Generate Token");
-  const url = 'https://downdetectorapi.com/v2/tokens'
-    let options = {
-      method: 'POST',
-      qs: { grant_type: 'client_credentials' },
-      headers: { authorization: 'Basic b64f5306-5134-486c-8ac3-0e91538c5968' }
-    };
 
-  const response = axios.post(url, options);
-  console.log("response", response)
+
+  // Generate Token
+  console.log("Generate Token");
+  const url = 'https://downdetectorapi.com/v2/tokens';
+  let options = {
+    headers: {
+      'Authorization': 'Basic 6173cf67-ba5e-4d02-9bfa-d8b437c6175f',
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    params: { grant_type: 'client_credentials' } // Use params instead of qs in axios
+  };
+
+  axios.post(url, null, options) // Pass null as body if parameters are in query string
+    .then(response => {
+      console.log("response", response.data); // Log the response data
+    })
+    .catch(error => {
+      console.error("Error generating token", error.response ? error.response.data : error.message);
+    });
 
 
 });
