@@ -1,0 +1,13 @@
+{
+  "id": 13,
+  "name": "downdetector.mx",
+  "locale": "es_MX",
+  "country_id": 94,
+  "country": {
+    "id": 94,
+    "iso": "MX",
+    "name": "Mexico",
+    "localized_name": "México"
+  },
+  "twitter": "downdetectorMX"
+}
