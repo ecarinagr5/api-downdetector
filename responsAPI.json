@@ -1,0 +1,17 @@
+[
+  {
+    "id": 0,
+    "title": "string",
+    "body": "string",
+    "company_id": 0,
+    "created_at": "2019-08-24T14:15:22Z",
+    "publish_at": "2019-08-24T14:15:22Z",
+    "is_active": true,
+    "measurement": {
+      "started_on": "2019-08-24T14:15:22Z",
+      "ended_on": "2019-08-24T14:15:22Z",
+      "expected": 0,
+      "actual": 0
+    }
+  }
+]
