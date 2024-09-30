@@ -56,12 +56,47 @@ const generateSite = async () => {
   }
 };
 
-const getCompanies = async () => {
-  const token = await generateToken();
+const reportsForSlug = async (token, slug) => {
+  const url = `https://downdetectorapi.com/v2/slugs/${slug}/reports`;
   const options = {
     method: "GET",
     headers: { authorization: `Bearer ${token?.access_token}` },
+    qs: {
+      interval: '15m',
+    },
   };
+
+  try {
+    const response = await axios.get(url, options);
+    console.log("generateSite", response?.data);
+    return response?.data;
+  } catch (error) {
+    console.error("Error generating token:", error);
+  }
+};
+
+const getResponse = async () => {
+  //1: Get the token
+  const token = await generateToken();
+  /*const options = {
+    method: "GET",
+    headers: { authorization: `Bearer ${token?.access_token}` },
+  };*/
+  let options = {
+    method: "GET",
+    qs: { fields: "id,name,slug,stats_24,baseline" },
+    headers: { authorization: `Bearer ${token?.access_token}` },
+  };
+
+  //Search by slug
+  //const url =`https://downdetectorapi.com/v2/slugs/${'atr'}/companies`
+  /*let options = {
+    method: "GET",
+    qs: {fields: 'id,name,slug,stats_24,baseline'},
+    headers: { authorization: `Bearer ${token?.access_token}` },
+  };*/
+
+  //Search by site
   //generateSite()
   try {
     //const response = await axios.get('https://downdetectorapi.com/v2/sites/13',options);
@@ -72,17 +107,24 @@ const getCompanies = async () => {
       "https://downdetectorapi.com/v2/sites/13/companies?page_size=25&order_by=name&order_direction=asc",
       options
     );*/
-    const response = await axios.get(
+    /*const response = await axios.get(
       "https://downdetectorapi.com/v2/companies",
       options
     );
-    console.log("getCompanies", response?.data);
+    console.log("getCompanies", response?.data);*/
+
+    //2: Get the companies slugs
+    //const response = await axios.get(url, options);
+
+    //3: Get the reports for each company
+    const report = reportsForSlug(token, "mega");
+    console.log("getCompanies", report);
   } catch (error) {
     console.error("Error generating token:", error);
   }
 };
 
-getCompanies();
+getResponse();
 app.get("/health", (req, res) => {
   res.status(200).send("API Leads is Available");
 });
