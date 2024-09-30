@@ -15,6 +15,12 @@ app.listen(process.env.PORT, () => {
   console.log(`Server listening on PORT ${app.get("port")} `);
 });
 
+
+console.log("Connect Leads is connected");
+app.get("/user/generateToken", (req, res) => {
+  // Validate User Here
+
+
 const url =
   "https://downdetectorapi.com/v2/tokens?grant_type=client_credentials";
 const clientID = "f535d828-0358-41a4-8b8a-1acbfd7fa304";
@@ -27,6 +33,15 @@ const encodedCredentials = Buffer.from(`${clientID}:${clientSecret}`).toString(
 let options = {
   headers: { Authorization: `Basic ${encodedCredentials}` },
 };
+
+  axios.post(url, null, options) // Pass null as body if parameters are in query string
+    .then(response => {
+      console.log("response", response.data); // Log the response data
+    })
+    .catch(error => {
+      console.error("Error generating token", error.response ? error.response.data : error.message);
+    });
+
 
 // Use an async function to handle the asynchronous request
 const generateToken = async () => {
